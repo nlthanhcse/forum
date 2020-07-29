@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 
@@ -19,15 +20,18 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String content;
-    private String postDate;
+    private String post_date;
     private Integer liked;
     private Integer unliked;
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "userId")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.REFRESH })
+    @JoinColumn(name = "user_id")
     private User user;
+
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "categoryId")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.REFRESH })
+    @JoinColumn(name = "category_id")
     private Category category;
 }
