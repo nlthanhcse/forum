@@ -18,18 +18,23 @@ public class CommentController {
         return this.commentService.getAll();
     }
 
+    @GetMapping("/post/{post_id}")
+    public List<Comment> getByPostId(@PathVariable(name = "post_id") Integer post_id) {
+        return this.commentService.getByPostId(post_id);
+    }
+
     @GetMapping("/comment/{commentId}")
     public Comment getById(@PathVariable(name = "commentId") Integer commentId) {
         return this.commentService.getById(commentId);
     }
 
-    @PostMapping("/comment")
-    public Comment addComment(@RequestBody Comment comment) {
-        return this.commentService.addComment(comment);
-    }
+        @PostMapping("/comment")
+        public Comment addComment(@RequestBody Comment comment) {
+            return this.commentService.addComment(comment);
+        }
 
-    @DeleteMapping("/comment/{commentId}")
-    public Comment deleteById(@PathVariable(name = "commentId") Integer commentId) {
-        return this.commentService.deleteById(commentId);
-    }
+        @DeleteMapping("/comment/{commentId}")
+        public Comment deleteById(@PathVariable(name = "commentId") Integer commentId) {
+            return this.commentService.deleteById(commentId);
+        }
 }

@@ -12,7 +12,7 @@ public class UserCommentService {
     @Autowired
     private UserCommentRepository userCommentRepository;
 
-    public UserComment doInteractWithPost(Integer user_id, Integer comment_id) {
+    public UserComment doInteractWithComment(Integer user_id, Integer comment_id) {
         return this.userCommentRepository.findUserCommentById_User_IdAndId_Comment_Id(user_id, comment_id);
     }
 

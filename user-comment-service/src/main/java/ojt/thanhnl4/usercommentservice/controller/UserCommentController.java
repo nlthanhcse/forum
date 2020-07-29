@@ -14,9 +14,9 @@ public class UserCommentController {
     private UserCommentService userCommentService;
 
     @GetMapping("/user-post/{user_id}/{comment_id}")
-    public UserComment doInteractWithPost(@PathVariable(name = "user_id") Integer user_id,
+    public UserComment doInteractWithComment(@PathVariable(name = "user_id") Integer user_id,
                                           @PathVariable(name = "comment_id") Integer comment_id) {
-        return this.userCommentService.doInteractWithPost(user_id, comment_id);
+        return this.userCommentService.doInteractWithComment(user_id, comment_id);
     }
 
     @DeleteMapping("/user-comment/{user_id}/{comment_id}")

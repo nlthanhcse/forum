@@ -18,9 +18,9 @@ public class UserController {
         return this.userService.getAll();
     }
 
-    @GetMapping("/user/{userId}")
-    public User getById(@PathVariable(name = "userId") Integer userId) {
-        return this.userService.getById(userId);
+    @GetMapping("/user/{user_id}")
+    public User getById(@PathVariable(name = "user_id") Integer user_id) {
+        return this.userService.getById(user_id);
     }
 
     @PostMapping("/user")
@@ -28,8 +28,8 @@ public class UserController {
         return this.userService.addUser(user);
     }
 
-    @DeleteMapping("/user/{userId}")
-    public User deleteById(@PathVariable(name = "userId") Integer userId) {
-        return this.userService.deleteById(userId);
+    @DeleteMapping("/user/{user_id}")
+    public User deleteById(@PathVariable(name = "user_id") Integer user_id) {
+        return this.userService.deleteById(user_id);
     }
 }

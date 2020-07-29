@@ -18,9 +18,9 @@ public class CategoryController {
         return this.categoryService.getAll();
     }
 
-    @GetMapping("/category/{categoryId}")
-    public Category getById(@PathVariable(name = "categoryId") Integer categoryId) {
-        return this.categoryService.getById(categoryId);
+    @GetMapping("/category/{category_id}")
+    public Category getById(@PathVariable(name = "category_id") Integer category_id) {
+        return this.categoryService.getById(category_id);
     }
 
     @PostMapping("/category")
@@ -28,8 +28,8 @@ public class CategoryController {
         return this.categoryService.addCategory(category);
     }
 
-    @DeleteMapping("/category/{categoryId}")
-    public Category deleteById(@PathVariable(name = "categoryId") Integer categoryId) {
-        return this.categoryService.deleteById(categoryId);
+    @DeleteMapping("/category/{category_id}")
+    public Category deleteById(@PathVariable(name = "category_id") Integer category_id) {
+        return this.categoryService.deleteById(category_id);
     }
 }

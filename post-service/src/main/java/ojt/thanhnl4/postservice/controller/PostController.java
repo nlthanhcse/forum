@@ -4,8 +4,7 @@ import ojt.thanhnl4.postservice.model.Post;
 import ojt.thanhnl4.postservice.model.User;
 import ojt.thanhnl4.postservice.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,23 +14,33 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @GetMapping("/")
     public List<Post> getAll() {
         return this.postService.getAll();
     }
 
-    public List<Post> getByUser(User user) {
-        return this.postService.getByUser(user);
+    @GetMapping("/user/{user_id}")
+    public List<Post> getByUserId(@PathVariable(name = "user_id") Integer user_id) {
+        return this.postService.getByUserId(user_id);
     }
 
-    public Post getById(Integer id) {
-        return this.postService.getById(id);
+    @GetMapping("/category/{category_id}")
+    public List<Post> getByCategoryId(@PathVariable(name = "category_id") Integer category_id) {
+        return this.postService.getByCategoryId(category_id);
     }
 
-    public Post addPost(Post post) {
+    @GetMapping("/post/{post_id}")
+    public Post getById(@PathVariable(name = "post_id") Integer post_id) {
+        return this.postService.getById(post_id);
+    }
+
+    @PostMapping("/post")
+    public Post addPost(@RequestBody Post post) {
         return this.postService.addPost(post);
     }
 
-    public Post deleteById(Integer id) {
-        return this.postService.deleteById(id);
+    @DeleteMapping("/post/{post_id}")
+    public Post deleteById(@PathVariable(name = "post_id") Integer post_id) {
+        return this.postService.deleteById(post_id);
     }
 }

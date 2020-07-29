@@ -17,8 +17,12 @@ public class PostService {
         return this.postRepository.findAll();
     }
 
-    public List<Post> getByUser(User user) {
-        return this.postRepository.findAllByUser(user);
+    public List<Post> getByUserId(Integer user_id) {
+        return this.postRepository.findAllByUserId(user_id);
+    }
+
+    public List<Post> getByCategoryId(Integer category_id) {
+        return this.postRepository.findAllByCategory_Id(category_id);
     }
 
     public Post getById(Integer id) {
