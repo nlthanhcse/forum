@@ -1,5 +1,6 @@
 package ojt.thanhnl4.postservice.controller;
 
+import ojt.thanhnl4.postservice.model.Category;
 import ojt.thanhnl4.postservice.model.Post;
 import ojt.thanhnl4.postservice.model.User;
 import ojt.thanhnl4.postservice.service.PostService;

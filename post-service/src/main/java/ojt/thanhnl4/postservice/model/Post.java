@@ -26,20 +26,16 @@ public class Post {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER,
             cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE,
-                    CascadeType.DETACH,
-                    CascadeType.REFRESH })
+                    CascadeType.MERGE
+            })
     @JoinColumn(name = "user_id")
     private User user;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER,
             cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE,
-                    CascadeType.DETACH,
-                CascadeType.REFRESH })
+                    CascadeType.MERGE
+            })
     @JoinColumn(name = "category_id")
     private Category category;
 }
