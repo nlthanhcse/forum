@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findAll();
+    User findUsersByUsername(String username);
     User findUserById(Integer id);
     User deleteUserById(Integer id);
 }

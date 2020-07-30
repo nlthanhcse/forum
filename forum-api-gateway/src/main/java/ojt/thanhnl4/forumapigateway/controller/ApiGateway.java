@@ -35,6 +35,16 @@ public class ApiGateway {
         ).getBody();
     }
 
+    @GetMapping("/users/user/username/{username}")
+    public User getUserByUsername(@PathVariable(name = "username") String username) {
+        return this.restTemplate.exchange(
+                "http://user-service/users/user/username/" + username,
+                HttpMethod.GET,
+                null,
+                User.class
+        ).getBody();
+    }
+
     @PostMapping("/users/user")
     public User addUser(@RequestBody User user) {
         return this.restTemplate

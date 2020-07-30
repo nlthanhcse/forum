@@ -16,6 +16,10 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
+    public User getByUsername(String username) {
+        return this.userRepository.findUsersByUsername(username);
+    }
+
     public User getById(Integer id) {
         return this.userRepository.findUserById(id);
     }
