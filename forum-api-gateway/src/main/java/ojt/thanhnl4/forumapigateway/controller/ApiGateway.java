@@ -3,7 +3,10 @@ package ojt.thanhnl4.forumapigateway.controller;
 import ojt.thanhnl4.forumapigateway.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -245,7 +248,7 @@ public class ApiGateway {
         ).getBody();
     }
 
-    @DeleteMapping("/user-posts/user-post/{user_id}/{post_id")
+    @DeleteMapping("/user-posts/user-post/{user_id}/{post_id}")
     public UserPost deleteUserPostByUserIdAndPostId(@PathVariable(name = "user_id") Integer user_id,
                                                     @PathVariable(name = "post_id") Integer post_id) {
         return this.restTemplate.exchange(
@@ -258,7 +261,7 @@ public class ApiGateway {
 
     @GetMapping("/user-comments/{user_id}/{type}")
     public List<UserComment> getLikedOrUnlikedUserCommentByUserIdAndType(@PathVariable(name = "user_id") Integer user_id,
-                                                                    @PathVariable(name = "type") String type) {
+                                                                         @PathVariable(name = "type") String type) {
         return this.restTemplate.exchange(
                 "http://user-comment-service/user-comments/" + user_id + "/" + type,
                 HttpMethod.GET,
@@ -268,9 +271,9 @@ public class ApiGateway {
         ).getBody();
     }
 
-    @GetMapping("/user-comments/user-comment/{user_id}/{comment_id")
+    @GetMapping("/user-comments/user-comment/{user_id}/{comment_id}")
     public UserComment getUserComment(@PathVariable(name = "user_id") Integer user_id,
-                                @PathVariable(name = "comment_id") Integer comment_id) {
+                                      @PathVariable(name = "comment_id") Integer comment_id) {
         return this.restTemplate.exchange(
                 "http://user-comment-service/user-comments/user-comment/" + user_id + "/" + comment_id,
                 HttpMethod.GET,
@@ -279,14 +282,45 @@ public class ApiGateway {
         ).getBody();
     }
 
-    @DeleteMapping("/user-comments/user-comment/{user_id}/{comment_id")
+    @DeleteMapping("/user-comments/user-comment/{user_id}/{comment_id}")
     public UserComment deleteUserCommentByUserIdAndPostId(@PathVariable(name = "user_id") Integer user_id,
-                                                    @PathVariable(name = "comment_id") Integer comment_id) {
+                                                          @PathVariable(name = "comment_id") Integer comment_id) {
         return this.restTemplate.exchange(
                 "http://user-comment-service/user-comments/user-comment/" + user_id + "/" + comment_id,
                 HttpMethod.DELETE,
                 null,
                 UserComment.class
+        ).getBody();
+    }
+
+    @PostMapping("/auth/sign-up")
+    public AuthResponse signUp(@RequestBody User user) {
+        return this.restTemplate
+                .postForObject(
+                        "http://login-service/auth/sign-up",
+                        user,
+                        AuthResponse.class
+                );
+    }
+
+    @GetMapping("/auth/sign-in")
+    public AuthResponse signIn(@RequestBody User user) {
+        HttpEntity<User> userPassed = new HttpEntity<>(user);
+        return this.restTemplate
+                .postForObject(
+                        "http://login-service/auth/sign-in",
+                        userPassed,
+                        AuthResponse.class
+                );
+    }
+
+    @GetMapping("/auth/sign-out")
+    public AuthResponse signOut() {
+        return this.restTemplate.exchange(
+                "http://login-service/auth/sign-out",
+                HttpMethod.GET,
+                null,
+                AuthResponse.class
         ).getBody();
     }
 }

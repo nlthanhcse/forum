@@ -43,7 +43,7 @@ public class LoginController {
         return authResponse;
     }
 
-    @GetMapping("/sign-in")
+    @PostMapping("/sign-in")
     public AuthResponse signIn(@RequestBody User user, HttpSession httpSession) {
         AuthResponse<User> authResponse = new AuthResponse();
         User userFromDB = this.restTemplate.exchange(
