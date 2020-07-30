@@ -7,7 +7,8 @@ import {HomeComponent} from './home/home.component';
 const routes: Routes = [
   // {path: '', component: LoginComponent, pathMatch: 'full'}, // pathMatch: 'full' means only redirect when the url is fully empty
   {path: 'forum', component: HomeComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: '', redirectTo: '/forum', pathMatch: 'full'}
   // {path: '**', redirectTo: '/recipe'}
 ];
 

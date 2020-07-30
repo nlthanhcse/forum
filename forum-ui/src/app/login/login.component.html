@@ -1,1 +1,35 @@
-<p>login works!</p>
+<div *ngIf="isProcessing" class="text-center">
+  <app-loader></app-loader>
+</div>
+<div class="alert alert-danger text-center" role="alert" *ngIf="error">
+  {{ error }}
+</div>
+<form (ngSubmit)="submit()" (keypress)="onChanges()" #authForm="ngForm" class="col-md-6 offset-3" *ngIf="!isProcessing"> <!--"ngFrom will prevent the form from submit to the server"-->
+  <div class="form-group">
+    <label for="username">User name</label>
+    <input type="text"
+           id="username"
+           class="form-control"
+           name="username"
+           ngModel
+           required
+           #username="ngModel"
+    >
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password"
+           id="password"
+           class="form-control"
+           name="password"
+           ngModel
+           required
+    >
+    <span class="help-block text-center"
+          *ngIf="!username.valid && username.touched">Please input username</span>
+  </div>
+  <div class="button-group">
+    <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid">{{ isSignIn ? 'Sign in' : 'Sign up' }}</button> |
+    <button class="btn btn-primary" type="button" (click)="switch()">Switch to {{ isSignIn ? 'Sign up' : 'Sign in' }}</button>
+  </div>
+</form>

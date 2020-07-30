@@ -7,17 +7,25 @@ import { HomeComponent } from './home/home.component';
 import {AppRoutingModule} from './app-routing.module';
 import {RouterModule} from '@angular/router';
 import { LoginComponent } from './login/login.component';
+import {FormsModule} from '@angular/forms';
+import { LoaderComponent } from './loader/loader.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    LoaderComponent,
+    AuthenticationComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
   ],
   exports: [
     RouterModule
