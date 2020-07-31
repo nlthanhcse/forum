@@ -1,9 +1,6 @@
 package ojt.thanhnl4.forumapigateway.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,6 +20,7 @@ public class User {
     private String username;
     private String password;
     private String image;
+    private String role;
     @OneToMany(mappedBy = "user", cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,

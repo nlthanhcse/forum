@@ -11,6 +11,7 @@ import {FormsModule} from '@angular/forms';
 import { LoaderComponent } from './loader/loader.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import {HttpClientModule} from '@angular/common/http';
+import {AuthService} from './authentication/auth.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import {HttpClientModule} from '@angular/common/http';
   exports: [
     RouterModule
   ],
-  providers: [],
+  providers: [
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,22 +1,35 @@
 package ojt.thanhnl4.forumapigateway.controller;
 
 import ojt.thanhnl4.forumapigateway.model.*;
+import ojt.thanhnl4.forumapigateway.service.CustomUserDetailService;
+import ojt.thanhnl4.forumapigateway.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ApiGateway {
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtUtil jwtUtil;
+    @Autowired
+    private CustomUserDetailService userDetailService;
 
     @GetMapping("/users/")
     public List<User> getAllUser() {
@@ -39,7 +52,13 @@ public class ApiGateway {
     }
 
     @GetMapping("/users/user/username/{username}")
-    public User getUserByUsername(@PathVariable(name = "username") String username) {
+    public User getUserByUsername(@PathVariable(name = "username") String username, HttpServletRequest httpServletRequest) {
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        String currentUsername = jwtUtil.extractUsername(authorizationHeader.substring(7));
+        System.out.println(this.userDetailService.getRoleByUsername(username));
+        if (!currentUsername.equals(username) && this.userDetailService.getRoleByUsername(currentUsername).equals("ROLE_USER")) {
+            throw new AccessDeniedException("Access denied");
+        }
         return this.restTemplate.exchange(
                 "http://user-service/users/user/username/" + username,
                 HttpMethod.GET,
@@ -60,12 +79,19 @@ public class ApiGateway {
 
     @DeleteMapping("/users/user/{user_id}")
     public User deleteUser(@PathVariable(name = "user_id") Integer user_id) {
-        return this.restTemplate.exchange(
-                "http://user-service/users/user" + user_id,
-                HttpMethod.DELETE,
+        User userDeleted = this.restTemplate.exchange(
+                "http://user-service/users/user/" + user_id,
+                HttpMethod.GET,
                 null,
                 User.class
         ).getBody();
+        this.restTemplate.exchange(
+                "http://user-service/users/user/" + user_id,
+                HttpMethod.DELETE,
+                null,
+                User.class
+        );
+        return userDeleted;
     }
 
     @GetMapping("/categories/")
@@ -303,7 +329,7 @@ public class ApiGateway {
                 );
     }
 
-    @GetMapping("/auth/sign-in")
+    @PostMapping("/auth/sign-in")
     public AuthResponse signIn(@RequestBody User user) {
         HttpEntity<User> userPassed = new HttpEntity<>(user);
         return this.restTemplate
@@ -322,5 +348,17 @@ public class ApiGateway {
                 null,
                 AuthResponse.class
         ).getBody();
+    }
+
+    @PostMapping("/auth/log-in")
+    public String getJwtToken(@RequestBody User user) throws Exception {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+            );
+        } catch (Exception ex) {
+            throw new Exception("Username or password is incorrect.");
+        }
+        return jwtUtil.generateToken(user.getUsername());
     }
 }

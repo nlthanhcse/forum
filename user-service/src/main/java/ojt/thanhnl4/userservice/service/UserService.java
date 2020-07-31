@@ -28,7 +28,7 @@ public class UserService {
         return this.userRepository.save(user);
     }
 
-    public User deleteById(Integer id) {
-        return this.userRepository.deleteUserById(id);
+    public void deleteById(Integer id) {
+        this.userRepository.deleteById(id);
     }
 }
