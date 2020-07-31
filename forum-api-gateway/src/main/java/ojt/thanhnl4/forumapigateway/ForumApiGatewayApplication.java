@@ -14,11 +14,11 @@ import org.springframework.web.client.RestTemplate;
 @EnableEurekaClient
 @EnableZuulProxy
 public class ForumApiGatewayApplication {
-	@Bean
-	@LoadBalanced
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
+//	@Bean
+//	@LoadBalanced
+//	public RestTemplate restTemplate() {
+//		return new RestTemplate();
+//	}
 	public static void main(String[] args) {
 		SpringApplication.run(ForumApiGatewayApplication.class, args);
 	}
