@@ -41,30 +41,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable().authorizeRequests().antMatchers(
-//                "/api/auth/sign-up",
-//                "/api/auth/sign-in",
-//                "/api/auth/sign-out",
-//                "/api/auth/log-in")
-//                .permitAll()
-//                .antMatchers("/api/users/",
-//                        "/api/users/user/",
-//                        "/api/categories/category/**").hasRole("ADMIN")
-//                .antMatchers(
-//                        "/api/user-posts/**",
-//                        "/api/user-comments/**",
-//                        "/api/categories/",
-//                        "/api/posts/**",
-//                        "/api/comments/**").hasAnyRole("ADMIN", "USER")
-//                .antMatchers("/api/categories/**").hasRole("ADMIN")
-//                .anyRequest()
-//                .authenticated()
-//                .and().exceptionHandling().and().sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.csrf().disable().authorizeRequests().anyRequest()
+        http.csrf().disable().authorizeRequests().antMatchers(
+                "/api/auth/sign-up",
+                "/api/auth/sign-in",
+                "/api/auth/sign-out",
+                "/api/auth/log-in")
                 .permitAll()
+                .antMatchers("/api/users/",
+                        "/api/users/user/",
+                        "/api/categories/category/**").hasRole("ADMIN")
+                .antMatchers(
+                        "/api/user-posts/**",
+                        "/api/user-comments/**",
+                        "/category/api/",
+                        "/api/posts/**",
+                        "/api/comments/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/categories/**").hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
                 .and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        http.csrf().disable().authorizeRequests().anyRequest()
+//                .permitAll()
+//                .and().exceptionHandling().and().sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
