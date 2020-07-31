@@ -19,7 +19,7 @@ public class CustomUserDetailService implements UserDetailsService {
     private UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User userFromDB = this.userRepository.findByUsername(s);
+        User userFromDB = this.userRepository.findByUsername(s);p
         System.out.println(userFromDB);
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         if (userFromDB == null) {
