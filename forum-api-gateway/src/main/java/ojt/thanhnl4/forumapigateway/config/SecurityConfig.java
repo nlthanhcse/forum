@@ -47,16 +47,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/api/auth/sign-out",
                 "/api/auth/log-in")
                 .permitAll()
-                .antMatchers("/api/users/",
-                        "/api/users/user/",
+                .antMatchers("/user/api/",
+                        "/user/api/user/",
                         "/api/categories/category/**").hasRole("ADMIN")
                 .antMatchers(
-                        "/api/user-posts/**",
-                        "/api/user-comments/**",
+                        "/user-post/api/**",
+                        "/user-comment/api/**",
                         "/category/api/",
-                        "/api/posts/**",
-                        "/api/comments/**").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/api/categories/**").hasRole("ADMIN")
+                        "/post/api/**",
+                        "/comment/api/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/category/api/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and().exceptionHandling().and().sessionManagement()

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user-comments")
+@RequestMapping("/api")
 public class UserCommentController {
     @Autowired
     private UserCommentService userCommentService;
