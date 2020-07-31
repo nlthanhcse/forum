@@ -10,6 +10,10 @@ FORUM:
 		forum-user: port-8761
 	API gateway
 		forum-api-gatewat: port-8087
+	database management system: MySQL
+		database name: forum
+		creation table sql file: forum-api-gateway/src/main/resources/forum-create-table.sql
+		fake data sql file: forum-api-gateway/src/main/resources/forum-fake-data.sql
 
 	
 
